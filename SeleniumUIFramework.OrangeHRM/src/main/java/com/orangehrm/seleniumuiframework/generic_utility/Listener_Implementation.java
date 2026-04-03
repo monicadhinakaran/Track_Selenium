@@ -1,0 +1,51 @@
+package com.orangehrm.seleniumuiframework.generic_utility;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class Listener_Implementation implements ITestListener {
+
+	ExtentReports extent = new ExtentReports();
+	ExtentSparkReporter spark = new ExtentSparkReporter("./Reports/test_res.html");
+	ExtentTest test;
+	WebDriver driver;
+	
+	@Override
+	public void onTestStart(ITestResult result) {
+		test = extent.createTest(result.getMethod().getMethodName());		
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult result) {
+		test.pass("Test Status : Pass");
+	}
+
+	@Override
+	public void onTestFailure(ITestResult result) {
+		test.fail("Test Status : Fail");
+		test.fail(result.getThrowable());
+		ScreenShot_Utility ssu = new ScreenShot_Utility();
+		try {
+			ssu.captureScreenshot(driver, result.getMethod().getMethodName());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onTestSkipped(ITestResult result) {
+		test.skip("Test Status : Skip");;
+	}
+
+	@Override
+	public void onFinish(ITestContext context) {
+		extent.flush();
+	}
+
+}

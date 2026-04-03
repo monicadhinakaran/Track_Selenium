@@ -1,0 +1,7 @@
+<WebElement>
+    <LoginPage>
+        <usernameField>name:username</usernameField>
+        <passwordField>name:password</passwordField>
+        <loginButton>css:button.orangehrm-login-button</loginButton>
+    </LoginPage>
+</WebElement>
