@@ -22,6 +22,7 @@ public class Mouse_Click_Hold {
 		WebElement Circle_Hold =  driver.findElement(By.id("circle"));
 		
 		Actions action = new Actions(driver);
+		
 		action.clickAndHold(Circle_Hold).build().perform();
 		
 		//Release the element after 5 seconds
